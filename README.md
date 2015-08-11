@@ -1,0 +1,2 @@
+# competitions
+All competitions
