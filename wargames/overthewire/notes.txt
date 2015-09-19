@@ -458,38 +458,38 @@ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
 
 
 #!/bin/bash
-for i in $(seq 87 150)
+for i in $(seq $1 $2)
 do
-	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ00$i"
-	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ00$i" | nc localhost 30002
+        printf "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i "
+        echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i" | nc localhost 30002 | grep -v "I am" | grep -v "Wrong"
 done
 
+ 
 
 chmod +x crack.sh
-./crack.sh 10 87 > hey.txt
-tail -n 20 hey.txt | grep -v "Fail" | grep -v "I am" | grep -v "Exiting"
+cd /tmp/my12345 
+./crack.sh 
+
+optional: watch -n5 tail -n 30 hey.txt
+
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 5669 Correct!
+The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 
 
-for i in $(seq 0 9)
-do
-	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ000$i"
-	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ$i" | nc localhost 30002
-done
+--------------------------------------------------------------------------------------------------------------------
+level 25
+ssh bandit25@bandit.labs.overthewire.org
+password: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+
+ssh -oStrictHostKeyChecking=no bandit26@localhost -i bandit26.sshkey  << EOF
+ssh -oStrictHostKeyChecking=no bandit26@localhost -i bandit26.sshkey -t "cd /home/bandit26; bash --login"
+
+ssh  -i bandit26.sshkey bandit26@localhost
+
+
+ssh -oStrictHostKeyChecking=no bandit26@bandit.labs.overthewire.org -i bandit26.sshkey  'cat /etc/shells'
 
 
 
 
-for i in $(seq 100 999)
-do
-	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ0$i"
-	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ$i" | nc localhost 30002
-done
 
-
-
-for i in $(seq 1000 1010)
-do
-	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ$i"
-	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ$i" | nc localhost 30002
-
-done
