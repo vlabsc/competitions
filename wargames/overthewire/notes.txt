@@ -481,15 +481,28 @@ level 25
 ssh bandit25@bandit.labs.overthewire.org
 password: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 
-ssh -oStrictHostKeyChecking=no bandit26@localhost -i bandit26.sshkey  << EOF
-ssh -oStrictHostKeyChecking=no bandit26@localhost -i bandit26.sshkey -t "cd /home/bandit26; bash --login"
+ssh -oStrictHostKeyChecking=no bandit26@localhost -i bandit26.sshkey  
 
-ssh  -i bandit26.sshkey bandit26@localhost
+displays 
+
+ | |                   | (_) | |__ \ / /  
+ | |__   __ _ _ __   __| |_| |_   ) / /_  
+ | '_ \ / _` | '_ \ / _` | | __| / / '_ \ 
+ | |_) | (_| | | | | (_| | | |_ / /| (_) |
+ |_.__/ \__,_|_| |_|\__,_|_|\__|____\___/ 
+Connection to localhost closed.
+
+and then the connection closes. That means it displays 7 to 8 lines and closes it.
+
+Changed the console font size to bigger one, so only four lines are displayed in console. then pressed 'v' command when more (%) was displayed. vi opened then did :r /etc/bandit_pass/bandit26
+
+this displayed the password .
+
+this is last password and last level !
+
+thanks to google .. i used only for this level.
+
+password is 5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z
 
 
-ssh -oStrictHostKeyChecking=no bandit26@bandit.labs.overthewire.org -i bandit26.sshkey  'cat /etc/shells'
-
-
-
-
-
+--------------------------------------------------------------------------------------------------------------------
